@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+  <title>Google Maps Multiple Markers</title> 
+  <script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>
+</head> 
+<body>
+  <div id="map" style="width: 1080px; height: 720px;"></div>
+
+  <script type="text/javascript">
+    var locations = [
+	  ['Rettie - Sunbury street 750GBP <a href="http://www.rightmove.co.uk/property-to-rent/property-52992379.html">Link</a>', 55.9517763, -3.2202478, 1],
+	  ['Rettie - Nicolson Street 675 <a href="http://www.citylets.co.uk/property-rent/old-town-nicolson-street-eh8-406213/">Link</a>', 55.945501, -3.184575,1],
+	  ['Murray and Carrie - Jamaica Mews 750GBP <a href="http://www.rightmove.co.uk/property-to-rent/property-39930096.html">Link</a>', 55.955829, -3.203885, 2],
+	  ['Murray and Carrie - Hawthornbank Ln 750GBP <a href="http://www.citylets.co.uk/property-rent/west-end-hawthornbank-lane-eh4-405172/">Link</a>', 55.951728,-3.217811,2],
+	  ['Murray and Carrie - Eyre Terrace 725GBP <a href="http://www.rightmove.co.uk/property-to-rent/property-39735666.html">Link</a>', 55.960831,-3.199884,2],
+	  ['Ben property - Easter road 725GBP <a href="http://www.benproperty.co.uk/property/easter-road-easter-road-2/">Link</a>',55.962888,-3.170861,3],
+	  ['Ben property - Raeburn Mews 695GBP <a href="http://www.benproperty.co.uk/property/raeburn-mews-stockbridge/">Link</a>',55.959521,-3.213146,3],
+	  ['DJ Alexander -  Logie Green Road 785GBP <a href="http://www.rightmove.co.uk/property-to-rent/property-53019157.html">Link</a>',55.964807,-3.196455,4],
+	  ['DJ Alexander - St stephen road 840GBP <a href="http://www.rightmove.co.uk/property-to-rent/property-52870234.html>Link</a>',55.958388,-3.205683,4],
+	  ['Ace property - High street - 850GBP <a href="http://www.citylets.co.uk/property-rent/old-town-high-street-eh1-374516/">Link</a>',55.950112,-3.188018,5],
+	  ['CMC property - West Port, Old Town - 665GBP <a href="http://www.citylets.co.uk/property-rent/old-town-west-port-eh1-382209/">Link</a>',55.946183,-3.2009,6],
+	  ['Amazon',55.95319,-3.188484,15]
+    ];
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: new google.maps.LatLng(55.9507003, -3.1869854),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {
+	  var icon = "";
+	  switch(locations[i][3]){
+	    case 1 :
+		  icon = "markers/blue_MarkerA.png";
+		  break;
+		case 2 :
+		  icon = "markers/red_MarkerA.png";
+		  break;
+		case 3 :
+		  icon = "markers/green_MarkerA.png";
+		  break;
+		case 4 :
+		  icon = "markers/yellow_MarkerA.png";
+		  break;
+		case 5 :
+		  icon = "markers/purple_MarkerA.png";
+		  break;
+		case 6 :
+		  icon = "markers/pink_MarkerA.png";
+		  break;
+	  }
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map,
+		icon : icon
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>
+</body>
+</html>
